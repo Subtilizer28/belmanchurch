@@ -8,7 +8,7 @@ import TransitionWrapper from "~/components/Loader";
 export const metadata: Metadata = {
   title: "Belman Church",
   description: "Main Website of St. Joseph Church, Belman",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/favicon.webp" }],
 };
 
 export default function RootLayout({
