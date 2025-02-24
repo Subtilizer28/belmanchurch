@@ -72,3 +72,13 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Donation {
+  id         String  @id @default(cuid())
+  paymentId  String  @unique
+  type       String
+  amount     Float
+  forWhom    String
+  byWhom     String
+  createdAt  DateTime @default(now())
+}
