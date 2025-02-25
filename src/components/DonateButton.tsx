@@ -7,7 +7,7 @@
 
 import { useState } from "react";
 import Script from "next/script";
-import { env } from "~/env";
+import { api } from "~/trpc/react";
 
 interface DonateButtonProps {
   type: string;
@@ -23,6 +23,8 @@ export default function DonateButton({
   byWhom,
 }: DonateButtonProps) {
   const [loading, setLoading] = useState(false);
+  const createOrder = api.donation.createOrder.useMutation();
+  const verifyPayment = api.donation.verifyPayment.useMutation();
 
   const handlePayment = async () => {
     if (!amount || Number(amount) <= 0) {
@@ -32,53 +34,39 @@ export default function DonateButton({
 
     setLoading(true);
     try {
-      // Call backend to create a Razorpay order
-      const response = await fetch("/api/donate/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type,
-          amount: Number(amount),
-          forWhom,
-          byWhom,
-        }),
+      const { razorpayOrderId } = await createOrder.mutateAsync({
+        type,
+        amount: Number(amount),
+        forWhom,
+        byWhom,
       });
 
-      const data: { orderId?: string; message?: string } =
-        await response.json();
-      if (!response.ok) {
-        throw new Error(data.message ?? "Failed to create order");
-      }
-
-      const { orderId } = data;
+      console.log("Razorpay Order ID:", razorpayOrderId);
 
       const paymentObject = new (window as any).Razorpay({
-        key: env.RAZORPAY_KEY_ID,
-        order_id: orderId,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: Number(amount) * 100,
         currency: "INR",
         name: "Belman Church",
-        description: `Donation for ${forWhom}`,
+        description: `Donation type: ${type}`,
+        order_id: razorpayOrderId,
         prefill: {
           name: byWhom,
           email: "test@example.com",
           contact: "9999999999",
         },
-        theme: {
-          color: "#EAC696",
-        },
+        theme: { color: "#EAC696" },
         handler: async (response: any) => {
-          try {
-            if (response.razorpay_payment_id) {
-              alert(
-                "Payment Successful! Payment ID: " +
-                  response.razorpay_payment_id,
-              );
-            }
-          } catch (error) {
-            console.error("Payment verification failed:", error);
+          if (response.razorpay_payment_id) {
+            await verifyPayment.mutateAsync({
+              razorpay_order_id: razorpayOrderId,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+
+            alert(
+              "Payment Successful! Payment ID: " + response.razorpay_payment_id,
+            );
           }
         },
       });

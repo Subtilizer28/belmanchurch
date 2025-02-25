@@ -23,6 +23,7 @@ export default function DonatePage() {
                 <option value="">Select Type</option>
                 <option value="church">Church Donation</option>
                 <option value="charity">Charity</option>
+                <option value="mass">Mass</option>
               </select>
               <input
                 type="text"
