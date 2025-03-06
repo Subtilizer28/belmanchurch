@@ -7,7 +7,6 @@ import { signIn } from "next-auth/react";
 import Button from "~/components/Button";
 
 export default function Home() {
-  //const hello = await api.post.hello({ text: "from tRPC" });
   //const { data: session } = useSession();
   const router = useRouter();
 
