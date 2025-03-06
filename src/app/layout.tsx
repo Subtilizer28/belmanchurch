@@ -2,7 +2,7 @@ import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 import Navbar from "~/components/Navbar";
-//import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import TransitionWrapper from "~/components/Loader";
 
 export const metadata: Metadata = {
@@ -17,12 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex max-h-screen flex-col">
-        {/* <SessionProvider> */}
+        <SessionProvider>
           <TransitionWrapper>
             <Navbar />
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </TransitionWrapper>
-        {/* </SessionProvider> */}
+        </SessionProvider>
       </body>
     </html>
   );
