@@ -15,40 +15,41 @@ export default function Navbar() {
     <>
       {/* Navbar */}
       <div className="absolute z-20 flex w-full justify-center">
-        <nav className="mt-[5%] flex h-[12%] w-[90%] items-center rounded-xl bg-black px-0 md:mt-[2%] md:px-2">
+        <nav className="mt-[5%] flex h-[12%] w-[90%] items-center rounded-xl bg-black/50 px-0 md:mt-[2%] md:px-2">
           {/* Logo */}
-          <div
-            className="flex select-none flex-row items-center"
-            onClick={() => router.push("/admin")}
-          >
+          <div className="flex select-none flex-row items-center">
             <Image
               alt="logo"
               src="/Logo.png"
               height={75}
               width={75}
               className="mb-2"
+              onClick={() => router.push("/admin")}
             />
-            <h1 className="text-sm font-bold tracking-wider text-white md:text-lg">
+            <h1
+              className="text-sm font-bold tracking-wider text-primary md:text-lg"
+              onClick={() => router.push("/admin")}
+            >
               ADMIN
             </h1>
           </div>
 
-          {role === "ADMIN" || "DEVELOPER" ? (
-            <div className="ml-auto mr-6 hidden space-x-8 font-bold text-white md:flex">
-              <NavButton route="/admin/donation">Donation</NavButton>
-              <NavButton route="/admin/misc">Events & Bethkati</NavButton>
+          {role == "PHOTOGRAPHER" ? (
+            <div className="ml-auto mr-6 hidden space-x-8 font-bold text-primary md:flex">
               <NavButton route="/admin/gallery">Gallery</NavButton>
               <NavButton route="/">Home</NavButton>
             </div>
           ) : (
-            <div className="ml-auto mr-6 hidden space-x-8 font-bold text-white md:flex">
+            <div className="ml-auto mr-6 hidden space-x-8 font-bold text-primary md:flex">
+              <NavButton route="/admin/donation">Donation</NavButton>
+              <NavButton route="/admin/misc">Events & Bethkati</NavButton>
               <NavButton route="/admin/gallery">Gallery</NavButton>
               <NavButton route="/">Home</NavButton>
             </div>
           )}
           {/* Mobile Menu Icon */}
           <button
-            className="ml-auto mr-6 text-white md:hidden"
+            className="ml-auto mr-6 text-primary md:hidden"
             onClick={() => setIsOpen(true)}
           >
             <Menu size={30} />
@@ -66,17 +67,8 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-30 flex flex-col items-center justify-center bg-black/85"
           >
-            {role === "ADMIN" || "DEVELOPER" ? (
-              <div className="flex flex-col items-center justify-center space-y-6 text-2xl font-bold text-white">
-                <NavButton
-                  route="/admin/donation"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Donation
-                </NavButton>
-                <NavButton route="/admin/misc" onClick={() => setIsOpen(false)}>
-                  Events & Bethkati
-                </NavButton>
+            {role == "PHOTOGRAPHER" ? (
+              <div className="flex flex-col items-center justify-center space-y-6 text-2xl font-bold text-primary">
                 <NavButton
                   route="/admin/gallery"
                   onClick={() => setIsOpen(false)}
@@ -95,7 +87,16 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center space-y-6 text-2xl font-bold text-white">
+              <div className="flex flex-col items-center justify-center space-y-6 text-2xl font-bold text-primary">
+                <NavButton
+                  route="/admin/donation"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Donation
+                </NavButton>
+                <NavButton route="/admin/misc" onClick={() => setIsOpen(false)}>
+                  Events & Bethkati
+                </NavButton>
                 <NavButton
                   route="/admin/gallery"
                   onClick={() => setIsOpen(false)}
@@ -131,7 +132,7 @@ export default function Navbar() {
   }) {
     return (
       <button
-        className="text-lg text-white hover:text-white/55"
+        className="text-lg text-primary hover:text-primary/55"
         onClick={() => {
           router.push(route);
           onClick?.(); // Close menu on mobile
