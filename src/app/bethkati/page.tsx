@@ -61,13 +61,18 @@ export default function Bethkati() {
                       key={issue.url}
                       className="flex h-80 w-60 flex-col items-center justify-center gap-3 rounded-3xl bg-secondary p-4 text-textcolor transition-shadow hover:bg-secondary hover:shadow-2xl hover:shadow-primary"
                     >
-                      <div className="flex h-40 w-52 rounded-2xl bg-accent text-primary font-bold justify-center items-center">
+                      <div className="flex h-40 w-52 items-center justify-center rounded-2xl bg-accent font-bold text-primary">
                         {issue.month} - {issue.issueYear}
                       </div>
                       <div className="">
-                        <p className="font-extrabold">Bethkati {issue.issueYear}</p>
+                        <p className="font-extrabold">
+                          Bethkati {issue.issueYear}
+                        </p>
                       </div>
-                      <button onClick={() => setSelectedFile(issue.url)} className="rounded-xl bg-accent text-primary p-2 px-6 font-extrabold transition-colors hover:bg-primary hover:text-textcolor">
+                      <button
+                        onClick={() => setSelectedFile(issue.url)}
+                        className="rounded-xl bg-accent p-2 px-6 font-extrabold text-primary transition-colors hover:bg-primary hover:text-textcolor"
+                      >
                         Open Bethkati
                       </button>
                     </div>
