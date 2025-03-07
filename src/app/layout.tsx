@@ -1,9 +1,9 @@
 import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
-import Navbar from "~/components/Navbar";
 import { SessionProvider } from "next-auth/react";
 import TransitionWrapper from "~/components/Loader";
+import NavbarSelector from "~/components/navbars/NavbarSelector"; // Import new component
 
 export const metadata: Metadata = {
   title: "Belman Church",
@@ -19,8 +19,10 @@ export default function RootLayout({
       <body className="flex max-h-screen flex-col">
         <SessionProvider>
           <TransitionWrapper>
-            <Navbar />
-            <TRPCReactProvider>{children}</TRPCReactProvider>
+            <TRPCReactProvider>
+              <NavbarSelector /> {/* Dynamically renders correct navbar */}
+              {children}
+            </TRPCReactProvider>
           </TransitionWrapper>
         </SessionProvider>
       </body>
