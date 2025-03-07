@@ -16,16 +16,17 @@ export default function NavbarSelector() {
   const isGalleryRoute = pathname === "/admin/gallery";
 
   useEffect(() => {
+    if (!isAdminRoute) {
+      setIsAllowed(true); // Always allow non-admin pages
+      return;
+    }
+
     if (!role) return; // Wait for role to be available
 
-    if (isAdminRoute) {
-      if (role === "PHOTOGRAPHER" && !isGalleryRoute) {
-        router.replace("/unauthorized");
-      } else if (!["ADMIN", "DEVELOPER", "PHOTOGRAPHER"].includes(role)) {
-        router.replace("/unauthorized");
-      } else {
-        setIsAllowed(true);
-      }
+    if (role === "PHOTOGRAPHER" && !isGalleryRoute) {
+      router.replace("/unauthorized");
+    } else if (!["ADMIN", "DEVELOPER", "PHOTOGRAPHER"].includes(role)) {
+      router.replace("/unauthorized");
     } else {
       setIsAllowed(true);
     }
