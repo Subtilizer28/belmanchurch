@@ -44,13 +44,13 @@ export default function Home() {
             >
               {!role ? (
                 <Button onClick={() => signIn("google")}>Login</Button>
-              ) : role === "ADMIN" || "DEVELOPER" ? (
+              ) : role === "ADMIN" || role === "DEVELOPER" ? (
                 <Button onClick={() => router.push("/admin")}>Admin</Button>
               ) : role === "PHOTOGRAPHER" ? (
                 <Button onClick={() => router.push("/admin/gallery")}>
                   Upload
                 </Button>
-              ) : role === "PARISHONER" || "USER" ? (
+              ) : role === "PARISHONER" || role === "USER" ? (
                 <Button onClick={() => router.push("/profile")}>Profile</Button>
               ) : null}
               <Button onClick={() => router.push("/donate")}>Donate</Button>
