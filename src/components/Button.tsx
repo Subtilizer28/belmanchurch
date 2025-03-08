@@ -5,13 +5,18 @@ import { type ReactNode } from "react";
 interface ButtonProps {
   children: ReactNode;
   onClick?: () => void;
+  variant?: "default" | "destructive";
 }
 
-export default function Button({ children, onClick }: ButtonProps) {
+export default function Button({ children, onClick, variant = "default" }: ButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="relative z-10 w-32 md:w-36 h-12 cursor-pointer rounded-full text-lg font-bold text-textcolor bg-gradient-to-r from-primary via-accent to-secondary bg-[length:400%] transition-all duration-300 ease-in-out hover:animate-gradient-xy hover:bg-[length:100%] active:bg-primary focus:ring-2 focus:ring-secondary before:absolute before:-top-1 before:-bottom-1 before:-left-1 before:-right-1 before:-z-10 before:rounded-[35px] before:bg-gradient-to-r before:from-primary before:via-secondary before:to-primary before:bg-[length:400%] before:transition-all before:duration-1000 before:ease-in-out before:hover:blur-xl before:hover:bg-[length:100%]"
+      className={`relative z-10 w-32 md:w-36 h-12 cursor-pointer rounded-full text-lg font-bold text-textcolor transition-all duration-300 ease-in-out focus:ring-2 before:absolute before:-top-1 before:-bottom-1 before:-left-1 before:-right-1 before:-z-10 before:rounded-[35px] before:transition-all before:duration-1000 before:ease-in-out before:hover:blur-xl 
+      ${variant === "default" ? 
+        "bg-gradient-to-r from-primary via-accent to-secondary bg-[length:400%] hover:animate-gradient-xy hover:bg-[length:100%] active:bg-primary focus:ring-secondary before:bg-gradient-to-r before:from-primary before:via-secondary before:to-primary before:bg-[length:400%] before:hover:bg-[length:100%]" : 
+        "bg-red-600 hover:bg-red-700 active:bg-red-800 text-white focus:ring-red-400 before:bg-red-600 before:hover:bg-red-700"}
+      `}
     >
       {children}
     </button>
