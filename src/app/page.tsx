@@ -1,15 +1,13 @@
 "use client";
-// import { auth } from "~/server/auth";
-// import { api } from "~/trpc/server";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useRole } from "~/hooks/useRole";
 import { signIn } from "next-auth/react";
 import Button from "~/components/Button";
 
 export default function Home() {
-  //const hello = await api.post.hello({ text: "from tRPC" });
-  //const { data: session } = useSession();
   const router = useRouter();
+  const role = useRole();
 
   return (
     <div className="flex h-screen w-full items-center justify-center overflow-hidden bg-[url('/bg/home.jpg')] bg-cover bg-center">
@@ -44,7 +42,17 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="mt-8 flex space-x-6 md:space-x-10"
             >
-              <Button onClick={() => signIn()}>Login</Button>
+              {!role ? (
+                <Button onClick={() => signIn("google")}>Login</Button>
+              ) : role === "ADMIN" || role === "DEVELOPER" ? (
+                <Button onClick={() => router.push("/admin")}>Admin</Button>
+              ) : role === "PHOTOGRAPHER" ? (
+                <Button onClick={() => router.push("/admin/gallery")}>
+                  Upload
+                </Button>
+              ) : role === "PARISHONER" || role === "USER" ? (
+                <Button onClick={() => router.push("/profile")}>Profile</Button>
+              ) : null}
               <Button onClick={() => router.push("/donate")}>Donate</Button>
             </motion.div>
           </div>

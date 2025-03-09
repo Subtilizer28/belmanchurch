@@ -1,14 +1,14 @@
 import "~/styles/globals.css";
 import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
-import Navbar from "~/components/Navbar";
-//import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import TransitionWrapper from "~/components/Loader";
+import NavbarSelector from "~/components/navbars/NavbarSelector"; // Import new component
 
 export const metadata: Metadata = {
   title: "Belman Church",
   description: "Main Website of St. Joseph Church, Belman",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/favicon.webp" }],
 };
 
 export default function RootLayout({
@@ -17,12 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex max-h-screen flex-col">
-        {/* <SessionProvider> */}
+        <SessionProvider>
           <TransitionWrapper>
-            <Navbar />
-            <TRPCReactProvider>{children}</TRPCReactProvider>
+            <TRPCReactProvider>
+              <NavbarSelector /> {/* Dynamically renders correct navbar */}
+              {children}
+            </TRPCReactProvider>
           </TransitionWrapper>
-        {/* </SessionProvider> */}
+        </SessionProvider>
       </body>
     </html>
   );

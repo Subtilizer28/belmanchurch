@@ -15,7 +15,7 @@ export default function Navbar() {
       <div className="absolute flex justify-center w-full z-20">
         <nav className="mt-[5%] md:mt-[2%] flex h-[12%] w-[90%] items-center rounded-xl bg-primary/55 px-0 md:px-2">
           {/* Logo */}
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center select-none" onClick={() => router.push('/')}>
             <Image alt="logo" src="/Logo.png" height={75} width={75} className="mb-2" />
             <h1 className="font-bold tracking-wider text-textcolor text-sm md:text-lg">
               St. Joseph
